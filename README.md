@@ -7,11 +7,11 @@
     </kbd>
 </div>
 
-<h2><img src="src/assert/hellokittydance.gif" alt="Hi" width="42" /> 欢迎来访我的GitHub </h2>
+<h2><img src="src/assert/hellokittydance.gif" alt="Hi" width="42" /> Welcome to my GitHub </h2>
 
-我的网名是`Charmve` <sup><a href="https://github.com/Charmve/Charmve/blob/master/OctoCharmve/pronounce.m4a?raw=true" title="pronunciation">🔊</a></sup>，是一名软件开发工程师，先后任职于360、Momenta，对自动驾驶视觉感知、系统架构、软件开发有略微认识。另外，在量化交易摸爬滚打，也有几年策略研究和实践。目前，我主要关注在：端到端、大模型、自动驾驶、量化交易。下方可以看到我开源的相关项目repo。
+I am a Unity client development engineer and have previously worked at Xiaomi and MetaApp, gaining some insight into game development. In addition, my undergraduate research focused on VR simulation, and I have several noteworthy projects in that area. Currently, my primary focus is on game client development. Below, you can find repositories for some of my open-source projects.
 
-个人主页：https://charmve.github.io
+https://fmxs.github.io
 
 希望跟大家一起多多交流，感兴趣的可以继续看下去。
 
