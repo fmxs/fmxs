@@ -7,7 +7,7 @@
     </kbd>
 </div>
 
-<h2><img src="src/assert/hellokittydance.gif" alt="Hi" width="42" /> Welcome to my GitHub </h2>
+<h2> Welcome to my GitHub </h2>
 
 我的网名是`方墨小生` <sup><a href="https://github.com/Charmve/Charmve/blob/master/OctoCharmve/pronounce.m4a?raw=true" title="pronunciation">🔊</a></sup>，我是一名Unity客户端开发工程师，先后任职于小米、MetaApp，对游戏开发有略微认识。另外，我本科研究方向为VR仿真，也有几个拿得出手的项目。目前，我主要关注在：游戏客户端。下方可以看到我开源的相关项目repo。
 
