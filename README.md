@@ -9,7 +9,7 @@
 
 <h2> 欢迎来到我的github主页 </h2>
 
-我的网名是`方墨` <sup><a href="https://github.com/Charmve/Charmve/blob/master/OctoCharmve/pronounce.m4a?raw=true" title="pronunciation">🔊</a></sup>，目前是一名游戏开发工程师，先后任职于小米、MetaApp等，对游戏常用框架有略微认识。另外，我本科的研究方向为虚拟现实应用仿真。希望跟大家一起多多交流，感兴趣的可以继续看下去。
+我的网名是`方墨` <sup><a href="https://github.com/Charmve/Charmve/blob/master/OctoCharmve/pronounce.m4a?raw=true" title="pronunciation">🔊</a></sup>，目前是一名游戏开发工程师，先后任职于小米、完美世界等，对游戏常用框架有略微认识。另外，我本科的研究方向为虚拟现实应用仿真。希望跟大家一起多多交流，感兴趣的可以继续看下去。
 
 <img align="right" alt="GIF" src="src/assert/giphy.gif" width="84" title="Say HI"> <details><summary>(点击这里展开) <em><b>如果你有任何问题，可以给我留言</b><a href="https://github.com/fmxs/fmxs/issues/new" >在这里说点什么 <b>"Hello 👋" </b></a>, : )</em></summary>
 <br>
