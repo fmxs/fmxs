@@ -28,7 +28,7 @@ function ToolItem({ title, description, badge, badgeVariant }: ToolItemProps) {
   return (
     <button
       onClick={() => { /* TODO */ }}
-      className="w-full text-left p-4 rounded-xl border border-outline-variant/10 hover:border-primary/20 hover:bg-primary/5 transition-all group"
+      className="w-full text-left p-5 rounded-xl border border-outline-variant/20 bg-surface-container-lowest shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-primary/20 hover:bg-primary/5 transition-all duration-200 group"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <h4 className="font-medium text-on-surface group-hover:text-primary transition-colors">
