@@ -24,7 +24,7 @@ export default function LoginModal({ isOpen = false, onClose, onLogin }: LoginMo
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div onClick={onClose} onKeyDown={(e) => e.key === 'Escape' && onClose?.()} className="absolute inset-0 bg-on-surface/40 backdrop-blur-md transition-opacity duration-300 cursor-pointer" tabIndex={-1} />
+      <div onClick={onClose} className="absolute inset-0 bg-on-surface/40 backdrop-blur-md transition-opacity duration-300 cursor-pointer" />
 
       {/* Modal */}
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 transform transition-all">
