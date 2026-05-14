@@ -4,7 +4,26 @@ import { Search, Bell } from 'lucide-react'
 
 const models = ['GPT-4o', 'Gemini 1.5', 'Claude 3.5', 'Llama 3']
 
-export default function Header() {
+interface HeaderProps {
+  isLoggedIn: boolean
+  onAuthClick: () => void
+  onModelClick?: (model: string) => void
+}
+
+export default function Header({ isLoggedIn, onAuthClick, onModelClick }: HeaderProps) {
+  const accName = isLoggedIn ? '寒泽 / AI技术策划' : '未登录'
+  const accDetail = isLoggedIn ? '策划部 · Token余额：128,000' : '登录后显示部门/Token'
+  const authLabel = isLoggedIn ? '登出' : '登录'
+  const authBg = isLoggedIn ? 'bg-on-surface' : 'bg-primary'
+
+  const handleModelClick = (model: string) => {
+    if (onModelClick) {
+      onModelClick(model)
+    } else {
+      alert(`快捷跳转到 ${model} 专属工作空间`)
+    }
+  }
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-outline-variant/10 shadow-sm">
       <div className="max-w-[1440px] mx-auto px-10 py-4 flex items-center justify-between gap-6">
@@ -16,7 +35,8 @@ export default function Header() {
           {models.map((model) => (
             <button
               key={model}
-              className="px-4 py-2 rounded-full bg-surface-container-low text-sm font-semibold hover:bg-surface-container transition-colors duration-200"
+              onClick={() => handleModelClick(model)}
+              className="px-4 py-2 rounded-full bg-surface-container-low text-sm font-semibold hover:bg-surface-container hover:-translate-y-0.5 transition-all duration-200"
             >
               {model}
             </button>
@@ -38,11 +58,14 @@ export default function Header() {
         {/* Account Status */}
         <div className="flex items-center gap-4 bg-surface-container-low px-4 py-2 rounded-2xl border border-outline-variant/10">
           <div className="flex flex-col text-right">
-            <span className="text-sm font-semibold text-on-surface">未登录</span>
-            <span className="text-xs text-on-surface-variant">登录后显示部门/Token</span>
+            <span className="text-sm font-semibold text-on-surface">{accName}</span>
+            <span className="text-xs text-on-surface-variant">{accDetail}</span>
           </div>
-          <button className="bg-primary text-white px-6 py-2 rounded-xl text-sm font-bold hover:opacity-90 active:scale-95 transition-all shadow-md">
-            登录
+          <button
+            onClick={onAuthClick}
+            className={`${authBg} text-white px-6 py-2 rounded-xl text-sm font-bold hover:opacity-90 hover:-translate-y-0.5 active:scale-95 transition-all shadow-md`}
+          >
+            {authLabel}
           </button>
         </div>
 
