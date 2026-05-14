@@ -14,7 +14,7 @@ export default function LoginModal({ isOpen = false, onClose, onLogin }: LoginMo
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-on-surface/40 backdrop-blur-md transition-opacity duration-300" />
+      <div onClick={onClose} className="absolute inset-0 bg-on-surface/40 backdrop-blur-md transition-opacity duration-300 cursor-pointer" />
 
       {/* Modal */}
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 transform transition-all">
@@ -36,14 +36,14 @@ export default function LoginModal({ isOpen = false, onClose, onLogin }: LoginMo
         {/* Buttons */}
         <div className="space-y-4">
           <button
-            onClick={() => { /* TODO: implement login */ }}
-            className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:opacity-90 active:scale-95 transition-all shadow-lg"
+            onClick={onLogin}
+            className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg transition-all shadow-lg shadow-primary/20 hover:-translate-y-0.5 active:scale-95"
           >
             模拟企业登录
           </button>
           <button
-            onClick={() => { /* TODO */ }}
-            className="w-full bg-surface-container-low text-on-surface-variant py-3 rounded-xl font-medium hover:bg-surface-container transition-colors"
+            onClick={onClose}
+            className="w-full bg-surface-container-low text-on-surface-variant py-3 rounded-xl font-medium transition-colors hover:-translate-y-0.5 hover:bg-surface-container"
           >
             暂不登录
           </button>
