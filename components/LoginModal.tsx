@@ -1,6 +1,7 @@
 'use client'
 
 import { Lock } from 'lucide-react'
+import { useEffect, useCallback } from 'react'
 
 interface LoginModalProps {
   isOpen?: boolean
@@ -9,12 +10,21 @@ interface LoginModalProps {
 }
 
 export default function LoginModal({ isOpen = false, onClose, onLogin }: LoginModalProps) {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') onClose?.()
+  }, [onClose])
+
+  useEffect(() => {
+    if (isOpen) document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, handleKeyDown])
+
   if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div onClick={onClose} className="absolute inset-0 bg-on-surface/40 backdrop-blur-md transition-opacity duration-300 cursor-pointer" />
+      <div onClick={onClose} onKeyDown={(e) => e.key === 'Escape' && onClose?.()} className="absolute inset-0 bg-on-surface/40 backdrop-blur-md transition-opacity duration-300 cursor-pointer" tabIndex={-1} />
 
       {/* Modal */}
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 transform transition-all">
@@ -37,6 +47,7 @@ export default function LoginModal({ isOpen = false, onClose, onLogin }: LoginMo
         <div className="space-y-4">
           <button
             onClick={onLogin}
+            autoFocus
             className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg transition-all shadow-lg shadow-primary/20 hover:-translate-y-0.5 active:scale-95"
           >
             模拟企业登录
@@ -51,7 +62,7 @@ export default function LoginModal({ isOpen = false, onClose, onLogin }: LoginMo
 
         {/* Footer */}
         <p className="text-xs text-outline text-center mt-6">
-          © 2024 NeuralCore Enterprise AI. 仅供内部演示使用。
+          © {new Date().getFullYear()} NeuralCore Enterprise AI. 仅供内部演示使用。
         </p>
       </div>
     </div>
