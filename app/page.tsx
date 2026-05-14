@@ -1,9 +1,19 @@
+import Header from '@/components/Header'
+import HeroSection from '@/components/HeroSection'
+import ToolsGrid from '@/components/ToolsGrid'
+import Footer from '@/components/Footer'
+import LoginModal from '@/components/LoginModal'
+
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-4xl font-bold text-primary">NeuralCore AI Portal</h1>
-      </div>
-    </main>
+    <div className="min-h-screen bg-surface">
+      <Header />
+      <main className="mt-28 max-w-[1440px] mx-auto px-10 pb-20 space-y-8">
+        <HeroSection />
+        <ToolsGrid />
+      </main>
+      <Footer />
+      <LoginModal isOpen={false} />
+    </div>
   )
 }

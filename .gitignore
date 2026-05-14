@@ -51,3 +51,5 @@ Thumbs.db
 .cache/
 .parcel-cache/
 /minimax-cli/
+/.claude/
+/design/

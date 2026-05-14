@@ -1,6 +1,6 @@
 'use client'
 
-import { Globe, CorporateFare, ShieldCheck } from 'lucide-react'
+import { Globe, Building2, ShieldCheck } from 'lucide-react'
 
 type BadgeVariant = 'direct' | 'login' | 'internal'
 
@@ -132,7 +132,7 @@ export default function ToolsGrid() {
         iconColor="text-primary"
       />
       <ToolCategory
-        icon={<CorporateFare className="w-5 h-5 text-indigo-600" />}
+        icon={<Building2 className="w-5 h-5 text-indigo-600" />}
         title="公司账号"
         tools={secondPartyTools}
         iconColor="text-indigo-600"
