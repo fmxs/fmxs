@@ -12,10 +12,17 @@ const badgeStyles = {
   modl: 'bg-surface-container-highest text-on-surface-variant',
 }
 
+const badgeLabels: Record<'hot' | 'tool' | 'case' | 'modl', string> = {
+  hot: '重点',
+  tool: '工具',
+  case: '案例',
+  modl: '模型',
+}
+
 function Badge({ label, variant }: BadgeProps) {
   return (
     <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${badgeStyles[variant]}`}>
-      {label}
+      {badgeLabels[variant]}
     </span>
   )
 }
