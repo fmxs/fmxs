@@ -57,25 +57,26 @@ export default function NewsCard() {
           >
             <Badge label={item.badge} variant={item.badge} />
             <span className="text-sm text-on-surface">{item.text}</span>
+            <span className="text-sm text-on-surface-variant ml-auto">今天</span>
           </div>
         ))}
       </div>
 
       {/* Rolling News Section */}
-      <div className="border-t border-outline-variant/10">
-        <div className="rolling-news-container overflow-hidden">
-          <div className="rolling-news-track flex">
-            {rollingNews.concat(rollingNews).map((item, index) => (
-              <div
-                key={index}
-                onClick={() => { /* TODO */ }}
-                className="flex items-center gap-3 px-6 py-4 hover:bg-surface-container-low cursor-pointer transition-colors whitespace-nowrap"
-              >
-                <Badge label={item.badge} variant={item.badge} />
-                <span className="text-sm text-on-surface">{item.text}</span>
-              </div>
-            ))}
-          </div>
+      <div className="news-scroll-container">
+        <div className="news-scroll-track">
+          {rollingNews.concat(rollingNews).map((item, index) => (
+            <div
+              key={index}
+              onClick={() => { /* TODO */ }}
+              className="flex items-center gap-3 px-6 py-4 hover:bg-surface-container-low cursor-pointer transition-colors"
+              style={{ height: '56px' }}
+            >
+              <Badge label={item.badge} variant={item.badge} />
+              <span className="text-sm text-on-surface flex-1 truncate">{item.text}</span>
+              <span className="text-sm text-on-surface-variant ml-auto shrink-0">滚动</span>
+            </div>
+          ))}
         </div>
       </div>
     </article>
