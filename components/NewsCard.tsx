@@ -70,7 +70,7 @@ export default function NewsCard() {
               key={index}
               onClick={() => { /* TODO */ }}
               className="flex items-center gap-3 px-6 py-4 hover:bg-surface-container-low cursor-pointer transition-colors"
-              style={{ height: '56px' }}
+              style={{ height: 'var(--news-item-height)' }}
             >
               <Badge label={item.badge} variant={item.badge} />
               <span className="text-sm text-on-surface flex-1 truncate">{item.text}</span>
