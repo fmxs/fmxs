@@ -82,7 +82,7 @@ export default function AIChatCard() {
   }
 
   return (
-    <article className="bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_4px_20px_rgba(15,23,42,0.05)] overflow-hidden flex flex-col max-h-[700px]">
+    <article className="h-full bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_4px_20px_rgba(15,23,42,0.05)] overflow-hidden flex flex-col">
       {/* Card Header */}
       <div className="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-white/50 shrink-0">
         <div>
@@ -118,7 +118,7 @@ export default function AIChatCard() {
           {/* Messages - isolated scroll container */}
           <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
             <div
-              className="flex-1 overflow-y-auto mb-4 p-2 max-h-[440px] overscroll-contain"
+              className="flex-1 overflow-y-auto mb-4 p-2 overscroll-contain"
               style={{ overscrollBehavior: 'contain' }}
               onScroll={handleScroll}
             >
