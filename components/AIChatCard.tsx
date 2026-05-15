@@ -57,14 +57,18 @@ export default function AIChatCard() {
   }
 
   useEffect(() => {
-    if (autoScroll) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    // 确保页面滚动条在顶部（刷新后）
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
+    if (autoScroll && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
     }
   }, [messages, autoScroll])
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
-    // 用户手动滚动到接近底部时恢复自动滚动
     if (scrollHeight - scrollTop - clientHeight < 50) {
       setAutoScroll(true)
     } else {
@@ -80,7 +84,7 @@ export default function AIChatCard() {
   return (
     <article className="bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_4px_20px_rgba(15,23,42,0.05)] overflow-hidden flex flex-col max-h-[700px]">
       {/* Card Header */}
-      <div className="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-white/50">
+      <div className="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-white/50 shrink-0">
         <div>
           <h2 className="text-xl font-semibold text-on-surface">对话交互 AI</h2>
           <p className="text-xs text-on-surface-variant mt-1">猫形象助手，用于工具推荐 / Prompt 生成 / 使用指引</p>
@@ -91,9 +95,9 @@ export default function AIChatCard() {
       </div>
 
       {/* Content */}
-      <div className="p-6 flex flex-col lg:flex-row gap-6 flex-1">
+      <div className="p-6 flex flex-col lg:flex-row gap-6 flex-1 min-h-0">
         {/* Cat Assistant Panel */}
-        <div className="lg:w-48 bg-gradient-to-b from-surface-container-low to-primary-fixed/30 rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-primary/10">
+        <div className="lg:w-48 bg-gradient-to-b from-surface-container-low to-primary-fixed/30 rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-primary/10 shrink-0">
           <div className="w-16 h-16 mb-4 relative">
             <Image
               src="/cat-assistant.svg"
@@ -110,40 +114,44 @@ export default function AIChatCard() {
         </div>
 
         {/* Chat Window */}
-        <div className="flex-1 flex flex-col glass-effect rounded-2xl border border-outline-variant/20 p-4 min-h-[360px]">
-          {/* Messages */}
-          <div className="flex-1 space-y-4 overflow-y-auto mb-4 p-2 max-h-[500px]" onScroll={handleScroll}>
-            {messages.length === 0 && (
-              <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                  <Bot className="text-primary w-4 h-4" />
-                </div>
-                <div className="bg-white border border-outline-variant/10 p-3 rounded-2xl rounded-tl-sm text-base shadow-sm max-w-[85%]">
-                  你好，我是司内 AI 门户助手。你可以问我：图片、视频、翻译、代码、知识库、ComfyUI 应该怎么用。
-                </div>
-              </div>
-            )}
-            {messages.map((msg, index) => (
-              <div key={index} className="flex gap-3">
-                {msg.role === 'assistant' && (
+        <div className="flex-1 flex flex-col glass-effect rounded-2xl border border-outline-variant/20 p-4 min-h-0">
+          {/* Messages - isolated scroll container */}
+          <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
+            <div
+              className="flex-1 overflow-y-auto mb-4 p-2 max-h-[440px] overscroll-contain"
+              style={{ overscrollBehavior: 'contain' }}
+              onScroll={handleScroll}
+            >
+              {messages.length === 0 && (
+                <div className="flex gap-3">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                     <Bot className="text-primary w-4 h-4" />
                   </div>
-                )}
-                <div className={`${msg.role === 'user' ? 'bg-primary/10 ml-auto' : 'bg-white border border-outline-variant/10'} p-3 rounded-2xl ${msg.role === 'user' ? 'rounded-tr-sm' : 'rounded-tl-sm'} text-base shadow-sm max-w-[85%]`}>
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                  >
-                    {msg.content}
-                  </ReactMarkdown>
+                  <div className="bg-white border border-outline-variant/10 p-3 rounded-2xl rounded-tl-sm text-base shadow-sm max-w-[85%]">
+                    你好，我是司内 AI 门户助手。你可以问我：图片、视频、翻译、代码、知识库、ComfyUI 应该怎么用。
+                  </div>
                 </div>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
+              )}
+              {messages.map((msg, index) => (
+                <div key={index} className="flex gap-3">
+                  {msg.role === 'assistant' && (
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <Bot className="text-primary w-4 h-4" />
+                    </div>
+                  )}
+                  <div className={`${msg.role === 'user' ? 'bg-primary/10 ml-auto' : 'bg-white border border-outline-variant/10'} p-3 rounded-2xl ${msg.role === 'user' ? 'rounded-tr-sm' : 'rounded-tl-sm'} text-base shadow-sm max-w-[85%]`}>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {msg.content}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
           </div>
 
           {/* Suggestions */}
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4 shrink-0">
             {suggestions.map((suggestion) => (
               <button
                 key={suggestion}
@@ -156,7 +164,7 @@ export default function AIChatCard() {
           </div>
 
           {/* Input */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 shrink-0">
             <input
               className="flex-1 bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-xl px-4 text-base h-12"
               placeholder="输入你的需求..."
