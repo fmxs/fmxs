@@ -22,7 +22,7 @@ export default function AIChatCard() {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [autoScroll, setAutoScroll] = useState(true)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return
@@ -62,8 +62,12 @@ export default function AIChatCard() {
   }, [])
 
   useEffect(() => {
-    if (autoScroll && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    if (autoScroll && scrollContainerRef.current) {
+      const scrollContainer = scrollContainerRef.current
+      scrollContainer.scrollTo({
+        top: scrollContainer.scrollHeight,
+        behavior: 'smooth'
+      })
     }
   }, [messages, autoScroll])
 
@@ -118,6 +122,7 @@ export default function AIChatCard() {
           {/* Messages - isolated scroll container */}
           <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
             <div
+              ref={scrollContainerRef}
               className="flex-1 overflow-y-auto mb-4 p-2 overscroll-contain"
               style={{ overscrollBehavior: 'contain' }}
               onScroll={handleScroll}
@@ -146,7 +151,6 @@ export default function AIChatCard() {
                   </div>
                 </div>
               ))}
-              <div ref={messagesEndRef} />
             </div>
           </div>
 
