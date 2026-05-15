@@ -36,10 +36,14 @@ components/             # UI 组件（独立无状态，props 驱动）
   HeroSection.tsx       # Hero 区（60/40 网格布局）
   NewsCard.tsx          # AI 资讯卡片（含滚动动画）
   ToolsGrid.tsx         # 工具导航网格（三大分类）
+  AIChatCard.tsx        # 聊天助手（对话式 AI，支持快捷指令）
   LoginModal.tsx        # 登录弹窗
 
 config/
   design-tokens.ts      # 设计令牌（颜色、间距、圆角、阴影）
+
+app/api/neko/          # AI 对话 API（DeepSeek 状态机路由）
+  route.ts             # 意图分类 → 状态机分发
 
 design/
   DESIGN.md             # 设计规范（反主流美学规则）
@@ -50,6 +54,13 @@ design/
 登录状态在 `app/page.tsx` 统一管理，通过 props 传递：
 - `Header` 接收 `isLoggedIn`, `onAuthClick`
 - `LoginModal` 接收 `isOpen`, `onClose`, `onLogin`
+
+## Neko AI 聊天后端
+
+`app/api/neko/route.ts` 实现：
+- DeepSeek API 意图分类（TOOL_RECOMMEND / USAGE_GUIDE / GENERAL_CHAT）
+- 状态机模式分发处理
+- 需配置 `.env.local`：复制 `.env.local.example` 填入 `DEEPSEEK_API_KEY`
 
 ## Design Rules (AGENTS.md)
 
