@@ -2,7 +2,9 @@
 
 import { Bot, Send } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { useEffect, useRef, useState } from 'react'
 
 const suggestions = [
   '我想生成角色概念图',
@@ -19,6 +21,8 @@ export default function AIChatCard() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [autoScroll, setAutoScroll] = useState(true)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return
@@ -28,13 +32,15 @@ export default function AIChatCard() {
     setIsLoading(true)
 
     // 添加用户消息
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }])
+    const updatedMessages = [...messages, { role: 'user' as const, content: userMessage }]
+    setMessages(updatedMessages)
+    setAutoScroll(true)
 
     try {
       const response = await fetch('/api/neko', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ messages: updatedMessages }),
       })
       const data = await response.json()
 
@@ -50,13 +56,29 @@ export default function AIChatCard() {
     }
   }
 
+  useEffect(() => {
+    if (autoScroll) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages, autoScroll])
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
+    // 用户手动滚动到接近底部时恢复自动滚动
+    if (scrollHeight - scrollTop - clientHeight < 50) {
+      setAutoScroll(true)
+    } else {
+      setAutoScroll(false)
+    }
+  }
+
   const handleSuggestion = (suggestion: string) => {
     setInput(suggestion)
     setTimeout(() => handleSend(), 100)
   }
 
   return (
-    <article className="bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_4px_20px_rgba(15,23,42,0.05)] overflow-hidden flex flex-col">
+    <article className="bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_4px_20px_rgba(15,23,42,0.05)] overflow-hidden flex flex-col max-h-[700px]">
       {/* Card Header */}
       <div className="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-white/50">
         <div>
@@ -90,7 +112,7 @@ export default function AIChatCard() {
         {/* Chat Window */}
         <div className="flex-1 flex flex-col glass-effect rounded-2xl border border-outline-variant/20 p-4 min-h-[360px]">
           {/* Messages */}
-          <div className="flex-1 space-y-4 overflow-y-auto mb-4 p-2">
+          <div className="flex-1 space-y-4 overflow-y-auto mb-4 p-2 max-h-[500px]" onScroll={handleScroll}>
             {messages.length === 0 && (
               <div className="flex gap-3">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
@@ -109,10 +131,15 @@ export default function AIChatCard() {
                   </div>
                 )}
                 <div className={`${msg.role === 'user' ? 'bg-primary/10 ml-auto' : 'bg-white border border-outline-variant/10'} p-3 rounded-2xl ${msg.role === 'user' ? 'rounded-tr-sm' : 'rounded-tl-sm'} text-base shadow-sm max-w-[85%]`}>
-                  {msg.content}
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
                 </div>
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Suggestions */}
