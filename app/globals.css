@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #3525cd;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #4f46e5;
+  --color-on-primary-container: #dad7ff;
+  --color-surface: #f8f9ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff4ff;
+  --color-surface-container: #e5eeff;
+  --color-surface-container-high: #dce9ff;
+  --color-surface-container-highest: #d3e4fe;
+  --color-on-surface: #0b1c30;
+  --color-on-surface-variant: #464555;
+  --color-outline: #777587;
+  --color-outline-variant: #c7c4d8;
+  --color-tertiary: #005338;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #006e4b;
+  --color-on-tertiary-container: #67f4b7;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+}
+
+@layer components {
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes rolling-news {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes newsSlide {
+  0%, 20% {
+    transform: translateY(0);
+  }
+  25%, 45% {
+    transform: translateY(calc(-1 * var(--news-item-height, 56px)));
+  }
+  50%, 70% {
+    transform: translateY(calc(-2 * var(--news-item-height, 56px)));
+  }
+  75%, 95% {
+    transform: translateY(calc(-3 * var(--news-item-height, 56px)));
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+:root {
+  --news-item-height: 56px;
+}
+
+.news-scroll-container {
+  height: calc(4 * var(--news-item-height, 56px));
+  overflow: hidden;
+  position: relative;
+}
+
+.news-scroll-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, var(--color-surface-container-lowest) 60%, transparent);
+  pointer-events: none;
+}
+
+.news-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+.news-scroll-track {
+  display: flex;
+  flex-direction: column;
+  animation: newsSlide 12s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.rolling-news {
+  animation: rolling-news 30s linear infinite;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
