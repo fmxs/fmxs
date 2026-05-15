@@ -16,6 +16,7 @@ npm run dev      # 开发服务器 (http://localhost:3000)
 npm run build    # 生产构建
 npm run start    # 生产服务器
 npm run lint     # ESLint 检查
+npm run lint -- --fix  # ESLint 检查并自动修复
 
 # minimax-cli
 cd minimax-cli && bun run build   # 构建
@@ -42,8 +43,10 @@ components/             # UI 组件（独立无状态，props 驱动）
 config/
   design-tokens.ts      # 设计令牌（颜色、间距、圆角、阴影）
 
-app/api/neko/          # AI 对话 API（DeepSeek 状态机路由）
-  route.ts             # 意图分类 → 状态机分发
+app/api/neko/          # AI 对话 API（Agent Loop 架构）
+  route.ts             # Think + Execute 循环，支持 Tool Calls
+
+.env.local             # 环境变量（复制自 .env.local.example）
 
 design/
   DESIGN.md             # 设计规范（反主流美学规则）
@@ -58,8 +61,9 @@ design/
 ## Neko AI 聊天后端
 
 `app/api/neko/route.ts` 实现：
-- DeepSeek API 意图分类（TOOL_RECOMMEND / USAGE_GUIDE / GENERAL_CHAT）
-- 状态机模式分发处理
+- DeepSeek API + OpenAI SDK（支持 DeepSeek 等兼容 API）
+- **Agent Loop 架构**：模型思考（Think）→ 调用工具（Execute）→ 返回结果，循环直到模型返回最终回复或达到最大步数限制
+- 支持 Tool Calls（工具推荐、使用指引、闲聊等）
 - 需配置 `.env.local`：复制 `.env.local.example` 填入 `DEEPSEEK_API_KEY`
 
 ## Design Rules (AGENTS.md)
@@ -77,5 +81,5 @@ design/
 位于 `minimax-cli/`：
 - ESM 模块，Bun native
 - 自定义错误层级 `src/errors/`
-- Zod 配置验证
+- Zod 验证输入/输出
 - 独立 AGENTS.md 规范
